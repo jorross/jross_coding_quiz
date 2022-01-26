@@ -22,7 +22,7 @@ function startTimer() {
 };
 
 function nextFunc(event) {
-    // increment the index for question and answer bank
+    // update index
     index++;
 
     // clear elements from previous question
@@ -31,6 +31,17 @@ function nextFunc(event) {
 
     // write new question to the page
     writeQuestion();
+
+    // set timeout to results for 2 seconds
+    setTimeout(function() {
+        resultEl.children().remove();
+        // $("#result").fadeOut("slow");
+        // setTimeout(fade_out, 3000);
+
+        // function fade_out() {
+        // };
+      }, 2000);
+
 };
 
 function processAnswer(event) {
@@ -41,14 +52,16 @@ function processAnswer(event) {
 
     if (btn_clicked[0].innerText == answer_bank[index]) {
         resultEl.append(
-            '<span class=\"d-flex justify-content-center w-100\">Correct! :)</span>'
+            '<p id="result" class=\"d-flex justify-content-center w-100\">Correct! :)</p>'
         )
     }
     else {
         resultEl.append(
-            '<span class=\"d-flex justify-content-center w-100\">Incorrect! :(</span>'
+            '<p id="result" class=\"d-flex justify-content-center w-100\">Incorrect! :(</p>'
         )
     }
+
+
     
     nextFunc();
 };
@@ -96,9 +109,27 @@ var question_bank = [
             "c": "\'",
             "d": ";"
         }
+    },
+    {
+        "question": "Which of the following symbols is used to seperate statements in a for-loop?",
+        "answers": {
+            "a": ".",
+            "b": ",",
+            "c": "\'",
+            "d": ";"
+        }
+    },
+    {
+        "question": "Which of the following symbols is used to seperate statements in a for-loop?",
+        "answers": {
+            "a": ".",
+            "b": ",",
+            "c": "\'",
+            "d": ";"
+        }
     }
 ];
 
-var answer_bank = ["truck", ";"];
+var answer_bank = ["truck", ";", ";", ";"];
 
 start_div_el.on('click', '#start-btn', startFunc);
