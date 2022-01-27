@@ -3,13 +3,16 @@ var textEl = $('#starting-text');
 var headerEl = $('#header');
 var resultEl = $('#result');
 var timerEl = $('#timer');
+var highscores_list_el = $('#score-list');
 
 var index = 0;
 
 var time = 60;
+var x;
+var score;
 function startTimer() {
     timerEl.text(time);
-    var x = setInterval(function() {
+    x = setInterval(function() {
         time--;
         timerEl.text(time);
 
@@ -21,7 +24,12 @@ function startTimer() {
     }, 1000);
 };
 
-function nextFunc(event) {
+function stopTimer() {
+    clearInterval(x);
+    score = time;
+}
+
+function nextQuestion(event) {
     // update index
     index++;
 
@@ -29,8 +37,14 @@ function nextFunc(event) {
     headerEl.children().eq(3).remove();
     start_div_el.children().remove();
 
-    // write new question to the page
-    writeQuestion();
+    // check if we are at the end of the game
+    if (index < question_bank.length){
+        // write new question to the page
+        writeQuestion();
+    }
+    else {
+        endQuiz();
+    }
 
     // set timeout to results for 2 seconds
     setTimeout(function() {
@@ -43,6 +57,33 @@ function nextFunc(event) {
       }, 2000);
 
 };
+
+function endQuiz(event) {
+    stopTimer();
+
+    // Change html to finishing page
+    headerEl.children().eq(2).html("All Done!");
+    headerEl.append(
+        '<p id="score-text" class=\"d-flex justify-content-center w-20 mx-4\">Your score was ' + score + '!</p>'
+    );
+    start_div_el.append(
+        '<p id="initial-prompt" class=\"justify-content-center w-20 mx-4\">Please enter your initials: </p>',
+        '<form id=\"initial-entry\"><input class=\"justify-content-center\" type="text"></input></form>'
+    );
+    console.log($('#initial-entry'));
+    $('#initial-entry').on('submit', function(event) {
+        event.preventDefault();
+
+        var userInput = $(this).children('input').val();
+
+        console.log(userInput);
+
+        localStorage.setItem(userInput, score);
+        // localStorage.setItem('scores', userInput + ': ' + score);
+
+        $(location).attr("href", "./assets/html/highscores.html"); 
+    })
+}
 
 function processAnswer(event) {
 
@@ -59,11 +100,9 @@ function processAnswer(event) {
         resultEl.append(
             '<p id="result" class=\"d-flex justify-content-center w-100\">Incorrect! :(</p>'
         )
+        time = time-10;
     }
-
-
-    
-    nextFunc();
+    nextQuestion();
 };
 
 function writeQuestion() {
