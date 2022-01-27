@@ -150,25 +150,25 @@ var question_bank = [
         }
     },
     {
-        "question": "Which of the following symbols is used to seperate statements in a for-loop?",
+        "question": "Which of the following languages is used for the content on a webpage?",
         "answers": {
-            "a": ".",
-            "b": ",",
-            "c": "\'",
-            "d": ";"
+            "a": "c++",
+            "b": "html",
+            "c": "java",
+            "d": "css"
         }
     },
     {
-        "question": "Which of the following symbols is used to seperate statements in a for-loop?",
+        "question": "Which of the following languages is used for the style on a webpage?",
         "answers": {
-            "a": ".",
-            "b": ",",
-            "c": "\'",
-            "d": ";"
+            "a": "c++",
+            "b": "html",
+            "c": "java",
+            "d": "css"
         }
     }
 ];
 
-var answer_bank = ["truck", ";", ";", ";"];
+var answer_bank = ["truck", ";", "html", "css"];
 
 start_div_el.on('click', '#start-btn', startFunc);
